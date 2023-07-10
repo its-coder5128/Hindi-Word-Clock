@@ -1,0 +1,1263 @@
+#include <DS3231.h>
+#include <LiquidCrystal_I2C.h>
+#include <Wire.h>
+
+int count = 0;
+DS3231 rtc(SDA, SCL);
+Time t;
+
+int pin[] = {2, 3, 4, 5, 6, 7, 8, 9, A0, A1, A2, A3};
+// 12 --> MODE; 13 --> SET; 2-9 -->MUX; A0 --> SAVA; A1 -->SADHE; A2 --> PONE;
+// A3 -->abhi baj rahe hai;
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  
+  rtc.begin();
+  lcd.begin();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("   HINDI WORD   ");
+  lcd.setCursor(0, 1);
+  lcd.print("      CLOCK    ");
+  delay(1000);
+  lcd.clear();
+
+  for (int i = 0; i < 13; i++) 
+  pinMode(pin[i], OUTPUT);
+
+  pinMode(12, INPUT_PULLUP);  // buttons mode//
+  pinMode(13, INPUT_PULLUP);  //  buttons mode//
+  
+}
+
+void loop() {
+  t = rtc.getTime();
+
+  ///////////////////////////////////////////////////////////////////////// SET
+  ///TIME
+  ////////////////////////////////////////////////////////////////////////////////////////////
+
+  
+  
+
+  if (digitalRead(12) == LOW)  // pressing the button for changing the time //
+  {
+    delay(100);
+    if (digitalRead(12) == LOW) 
+    {
+      set();  // setting the time by the user//
+    }
+    lcd.clear();  // clearing the screen after setting the time //
+    delay(200);
+  }
+
+  if (digitalRead(13) == LOW)  // set button is pressed //
+  {
+      delay(100);
+      if (digitalRead(13) == LOW) 
+      {
+         toggle();             
+      }
+      lcd.clear();
+      delay(200);
+  }
+
+  ///////////////////////////////////////////////////////////////////////// SET
+  ///TIME
+  ////////////////////////////////////////////////////////////////////////////////////////////
+
+  int hour = (t.hour) % 12;
+  int min = t.min;
+
+  /////////////////////////////////////////////////////////////////////////
+  ///LIGHTING LED
+  ////////////////////////////////////////////////////////////////////////////////////////////
+
+  if (0 < min && min <= 15) {
+    if (hour == 1) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, LOW);
+
+      digitalWrite(6, HIGH);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 2) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, LOW);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, HIGH);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 3) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, LOW);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, HIGH);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 4) {
+      digitalWrite(2, LOW);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, HIGH);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 5) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, LOW);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, HIGH);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 6) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, LOW);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, HIGH);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 7) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, LOW);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, HIGH);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 8) {
+      digitalWrite(2, LOW);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, HIGH);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 9) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, LOW);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 10) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, LOW);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 11) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, LOW);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 0) {
+      digitalWrite(2, LOW);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+    }
+
+    digitalWrite(A0, HIGH);  // sawa
+  }
+
+  if (15 < min && min <= 30) {
+    if (hour == 1) {                //DEDH //
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, LOW);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, HIGH);
+
+    } else if (hour == 2) {          //DHAI//
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, LOW);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, HIGH);
+
+    } else if (hour == 3) {
+      
+      digitalWrite(2, HIGH);
+      digitalWrite(3, LOW);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, HIGH);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+      digitalWrite(A1, HIGH);  // sadhe 
+
+    } else if (hour == 4) {
+      digitalWrite(2, LOW);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, HIGH);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+      digitalWrite(A1, HIGH);  // sadhe 
+
+    } else if (hour == 5) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, LOW);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, HIGH);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+      
+      digitalWrite(A1, HIGH);  // sadhe 
+
+    } else if (hour == 6) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, LOW);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, HIGH);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+      
+      digitalWrite(A1, HIGH);  // sadhe 
+
+    } else if (hour == 7) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, LOW);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, HIGH);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+      
+      digitalWrite(A1, HIGH);  // sadhe 
+
+    } else if (hour == 8) {
+      digitalWrite(2, LOW);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, HIGH);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+      
+      digitalWrite(A1, HIGH);  // sadhe 
+
+    } else if (hour == 9) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, LOW);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+      
+      digitalWrite(A1, HIGH);  // sadhe 
+
+    } else if (hour == 10) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, LOW);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+      
+      digitalWrite(A1, HIGH);  // sadhe 
+
+    } else if (hour == 11) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, LOW);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+      
+      digitalWrite(A1, HIGH);  // sadhe 
+
+    } else if (hour == 0) {
+      digitalWrite(2, LOW);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+      
+      digitalWrite(A1, HIGH);  // sadhe 
+    }
+
+
+  }
+
+  if (30 < min && min <= 45) {
+    if (hour < 11) {
+      hour = hour + 1;
+
+      if (hour == 1) {
+        digitalWrite(2, HIGH);
+        digitalWrite(3, HIGH);
+        digitalWrite(4, HIGH);
+        digitalWrite(5, LOW);
+
+        digitalWrite(6, HIGH);
+        digitalWrite(7, LOW);
+        digitalWrite(8, LOW);
+        digitalWrite(9, LOW);
+
+      } else if (hour == 2) {
+        digitalWrite(2, HIGH);
+        digitalWrite(3, HIGH);
+        digitalWrite(4, LOW);
+        digitalWrite(5, HIGH);
+
+        digitalWrite(6, HIGH);
+        digitalWrite(7, LOW);
+        digitalWrite(8, LOW);
+        digitalWrite(9, LOW);
+
+      } else if (hour == 3) {
+        digitalWrite(2, HIGH);
+        digitalWrite(3, LOW);
+        digitalWrite(4, HIGH);
+        digitalWrite(5, HIGH);
+
+        digitalWrite(6, HIGH);
+        digitalWrite(7, LOW);
+        digitalWrite(8, LOW);
+        digitalWrite(9, LOW);
+
+      } else if (hour == 4) {
+        digitalWrite(2, LOW);
+        digitalWrite(3, HIGH);
+        digitalWrite(4, HIGH);
+        digitalWrite(5, HIGH);
+
+        digitalWrite(6, HIGH);
+        digitalWrite(7, LOW);
+        digitalWrite(8, LOW);
+        digitalWrite(9, LOW);
+
+      } else if (hour == 5) {
+        digitalWrite(2, HIGH);
+        digitalWrite(3, HIGH);
+        digitalWrite(4, HIGH);
+        digitalWrite(5, LOW);
+
+        digitalWrite(6, LOW);
+        digitalWrite(7, HIGH);
+        digitalWrite(8, LOW);
+        digitalWrite(9, LOW);
+
+      } else if (hour == 6) {
+        digitalWrite(2, HIGH);
+        digitalWrite(3, HIGH);
+        digitalWrite(4, LOW);
+        digitalWrite(5, HIGH);
+
+        digitalWrite(6, LOW);
+        digitalWrite(7, HIGH);
+        digitalWrite(8, LOW);
+        digitalWrite(9, LOW);
+
+      } else if (hour == 7) {
+        digitalWrite(2, HIGH);
+        digitalWrite(3, LOW);
+        digitalWrite(4, HIGH);
+        digitalWrite(5, HIGH);
+
+        digitalWrite(6, LOW);
+        digitalWrite(7, HIGH);
+        digitalWrite(8, LOW);
+        digitalWrite(9, LOW);
+
+      } else if (hour == 8) {
+        digitalWrite(2, LOW);
+        digitalWrite(3, HIGH);
+        digitalWrite(4, HIGH);
+        digitalWrite(5, HIGH);
+
+        digitalWrite(6, LOW);
+        digitalWrite(7, HIGH);
+        digitalWrite(8, LOW);
+        digitalWrite(9, LOW);
+
+      } else if (hour == 9) {
+        digitalWrite(2, HIGH);
+        digitalWrite(3, HIGH);
+        digitalWrite(4, HIGH);
+        digitalWrite(5, LOW);
+
+        digitalWrite(6, LOW);
+        digitalWrite(7, LOW);
+        digitalWrite(8, HIGH);
+        digitalWrite(9, LOW);
+
+      } else if (hour == 10) {
+        digitalWrite(2, HIGH);
+        digitalWrite(3, HIGH);
+        digitalWrite(4, LOW);
+        digitalWrite(5, HIGH);
+
+        digitalWrite(6, LOW);
+        digitalWrite(7, LOW);
+        digitalWrite(8, HIGH);
+        digitalWrite(9, LOW);
+
+      } else if (hour == 11) {
+        digitalWrite(2, HIGH);
+        digitalWrite(3, LOW);
+        digitalWrite(4, HIGH);
+        digitalWrite(5, HIGH);
+
+        digitalWrite(6, LOW);
+        digitalWrite(7, LOW);
+        digitalWrite(8, HIGH);
+        digitalWrite(9, LOW);
+      }
+
+    } else {
+      digitalWrite(2, LOW);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+    }
+  
+
+  digitalWrite(A2, HIGH);  // paune
+}
+
+if (45 < min && min < 60) {
+  if (hour < 11) {
+    hour = hour + 1;
+
+    if (hour == 1) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, LOW);
+
+      digitalWrite(6, HIGH);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 2) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, LOW);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, HIGH);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 3) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, LOW);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, HIGH);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 4) {
+      digitalWrite(2, LOW);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, HIGH);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 5) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, LOW);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, HIGH);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 6) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, LOW);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, HIGH);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 7) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, LOW);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, HIGH);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 8) {
+      digitalWrite(2, LOW);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, HIGH);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 9) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, LOW);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 10) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, LOW);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+
+    } else if (hour == 11) {
+      digitalWrite(2, HIGH);
+      digitalWrite(3, LOW);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+    }
+
+  } else {
+    digitalWrite(2, LOW);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+
+    digitalWrite(6, LOW);
+    digitalWrite(7, LOW);
+    digitalWrite(8, HIGH);
+    digitalWrite(9, LOW);
+  }
+}
+
+
+if (min == 0) {
+  if (hour == 1) {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, LOW);
+
+    digitalWrite(6, HIGH);
+    digitalWrite(7, LOW);
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
+
+  } else if (hour == 2) {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, LOW);
+    digitalWrite(5, HIGH);
+
+    digitalWrite(6, HIGH);
+    digitalWrite(7, LOW);
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
+
+  } else if (hour == 3) {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, LOW);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+
+    digitalWrite(6, HIGH);
+    digitalWrite(7, LOW);
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
+
+  } else if (hour == 4) {
+    digitalWrite(2, LOW);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+
+    digitalWrite(6, HIGH);
+    digitalWrite(7, LOW);
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
+
+  } else if (hour == 5) {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, LOW);
+
+    digitalWrite(6, LOW);
+    digitalWrite(7, HIGH);
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
+
+  } else if (hour == 6) {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, LOW);
+    digitalWrite(5, HIGH);
+
+    digitalWrite(6, LOW);
+    digitalWrite(7, HIGH);
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
+
+  } else if (hour == 7) {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, LOW);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+
+    digitalWrite(6, LOW);
+    digitalWrite(7, HIGH);
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
+
+  } else if (hour == 8) {
+    digitalWrite(2, LOW);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+
+    digitalWrite(6, LOW);
+    digitalWrite(7, HIGH);
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
+
+  } else if (hour == 9) {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, LOW);
+
+    digitalWrite(6, LOW);
+    digitalWrite(7, LOW);
+    digitalWrite(8, HIGH);
+    digitalWrite(9, LOW);
+
+  } else if (hour == 10) {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, LOW);
+    digitalWrite(5, HIGH);
+
+    digitalWrite(6, LOW);
+    digitalWrite(7, LOW);
+    digitalWrite(8, HIGH);
+    digitalWrite(9, LOW);
+
+  } else if (hour == 11) {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, LOW);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+
+    digitalWrite(6, LOW);
+    digitalWrite(7, LOW);
+    digitalWrite(8, HIGH);
+    digitalWrite(9, LOW);
+
+  } else if (hour == 0) {
+    digitalWrite(2, LOW);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+
+    digitalWrite(6, LOW);
+    digitalWrite(7, LOW);
+    digitalWrite(8, HIGH);
+    digitalWrite(9, LOW);
+  }
+}
+
+    //digitalWrite(A3, HIGH);
+
+
+/////////////////////////////////////////////////////////////////////////
+///LIGHTING LED
+////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////   LCD
+////////////////////////////////////////////////////////////////////////////////////////////
+
+lcd.setCursor(0, 0);
+lcd.print("DATE: ");
+
+if (t.date < 10) lcd.print("0");
+lcd.print(t.date);
+lcd.print("/");
+
+if (t.mon < 10) lcd.print("0");
+lcd.print(t.mon);
+lcd.print("/");
+lcd.print(t.year);
+
+lcd.setCursor(0, 1);
+lcd.print("TIME: ");
+lcd.print(rtc.getTimeStr());
+
+/////////////////////////////////////////////////////////////////////////   LCD
+////////////////////////////////////////////////////////////////////////////////////////////
+
+delay(1000);  // wait for a second
+
+digitalWrite(2, HIGH);
+digitalWrite(3, HIGH);
+digitalWrite(4, HIGH);
+digitalWrite(5, HIGH);
+
+digitalWrite(6, LOW);
+digitalWrite(7, LOW);
+digitalWrite(8, LOW);
+digitalWrite(9, LOW);
+
+digitalWrite(A0, LOW);
+digitalWrite(A1, LOW);
+digitalWrite(A2, LOW);
+digitalWrite(A3, LOW);
+}
+
+
+void set() {
+  int date = t.date, month = t.mon, year = t.year;
+  int hour = t.hour, min = t.min;
+
+  while (count != 6) {
+    if (digitalRead(12) == LOW)  // when button is pushed //
+    {
+      
+      if (digitalRead(12) == LOW) {
+        count++;
+      }
+    }
+    switch (count) {
+      case 1: {
+        while (digitalRead(12) != LOW)  // button released//
+        {
+          lcd.clear();
+          lcd.print("DATE : ");
+          if (date < 10) lcd.print("0");
+          lcd.print(date);
+          lcd.cursor();
+          lcd.setCursor(8, 0);
+          lcd.blink();
+
+          if (digitalRead(13) == LOW)  // set button is pressed //
+          {
+            delay(100);
+            if (digitalRead(13) == LOW) {
+              date++;
+
+              if (date == 32) {
+                date = 1;
+              }
+
+              lcd.clear();
+
+              lcd.print("DATE : ");
+              if (date < 10) lcd.print("0");
+              lcd.print(date);
+
+              lcd.cursor();
+              lcd.setCursor(8, 0);
+              lcd.blink();
+            }
+          }
+
+          delay(100);
+        }
+        break;
+      }
+      case 2: {
+        while (digitalRead(12) != LOW) {
+          lcd.clear();
+          lcd.print("MONTH : ");
+          if (month < 10) lcd.print("0");
+          lcd.print(month);
+          lcd.cursor();
+          lcd.setCursor(9, 0);
+          lcd.blink();
+
+          if (digitalRead(13) == LOW) {
+            delay(100);
+            if (digitalRead(13) == LOW) {
+              month++;
+
+              if (month == 13) {
+                month = 1;
+              }
+
+              lcd.clear();
+
+              lcd.print("MONTH : ");
+              if (month < 10) lcd.print("0");
+              lcd.print(month);
+
+              lcd.cursor();
+              lcd.setCursor(9, 0);
+              lcd.blink();
+            }
+          }
+
+          delay(100);
+        }
+        break;
+      }
+      case 3: {
+        while (digitalRead(12) != LOW) {
+          lcd.clear();
+          lcd.print("YEAR : ");
+          if (year < 10) lcd.print("0");
+          lcd.print(year);
+          lcd.cursor();
+          lcd.setCursor(10, 0);
+          lcd.blink();
+
+          if (digitalRead(13) == LOW) {
+            delay(100);
+            if (digitalRead(13) == LOW) {
+              year++;
+
+              if (year == 2050) {
+                year = 2000;
+              }
+
+              lcd.clear();
+
+              lcd.print("YEAR : ");
+              if (year < 10) lcd.print("0");
+              lcd.print(year);
+
+              lcd.cursor();
+              lcd.setCursor(10, 0);
+              lcd.blink();
+            }
+          }
+
+          delay(100);
+        }
+        break;
+      }
+      case 4: {
+        while (digitalRead(12) != LOW) {
+          lcd.clear();
+          lcd.print("HOUR : ");
+
+          if (hour < 10) lcd.print("0");
+          lcd.print(hour);
+          lcd.cursor();
+          lcd.setCursor(8, 0);
+          lcd.blink();
+
+          if (digitalRead(13) == LOW) {
+            delay(100);
+            if (digitalRead(13) == LOW) {
+              hour++;
+
+              if (hour == 25) {
+                hour = 1;
+              }
+
+              lcd.clear();
+
+              lcd.print("HOUR : ");
+
+              if (hour < 10) lcd.print("0");
+              lcd.print(hour);
+
+              lcd.cursor();
+              lcd.setCursor(8, 0);
+              lcd.blink();
+            }
+          }
+
+          delay(100);
+        }
+        break;
+      }
+      case 5: {
+        while (digitalRead(12) != LOW) {
+          lcd.clear();
+          lcd.print("MINUTE : ");
+
+          if (min < 10) lcd.print("0");
+          lcd.print(min);
+          lcd.cursor();
+          lcd.setCursor(10, 0);
+          lcd.blink();
+
+          if (digitalRead(13) == LOW) {
+            delay(100);
+            if (digitalRead(13) == LOW) {
+              min++;
+
+              if (min == 61) {
+                min = 1;
+              }
+
+              lcd.clear();
+
+              lcd.print("MINUTE : ");
+
+              if (min < 10) lcd.print("0");
+              lcd.print(min);
+
+              lcd.cursor();
+              lcd.setCursor(10, 0);
+              lcd.blink();
+            }
+          }
+
+          delay(100);
+        }
+        break;
+      }
+    }
+    delay(300);
+  }
+
+  count = 0;
+  lcd.clear();
+
+  rtc.setTime(hour, min, t.sec);
+  rtc.setDate(date, month, year);
+}
+
+void toggle()
+{
+  while(digitalRead(13)!= LOW)
+  {
+    //12
+    digitalWrite(2, LOW);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+
+    digitalWrite(6, LOW);
+    digitalWrite(7, LOW);
+    digitalWrite(8, HIGH);
+    digitalWrite(9, LOW);
+    
+    digitalWrite(A2, HIGH);  // paune
+    delay(500);
+    digitalWrite(A2, LOW);  // paune
+        
+    digitalWrite(A0, HIGH);  // sawa
+    delay(500);    
+    digitalWrite(A0, LOW);  // sawa
+
+    digitalWrite(A1, HIGH);  // sadhe     
+    delay(500);    
+    digitalWrite(A1, LOW);  // sadhe     
+    
+    //1
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, LOW);
+
+    digitalWrite(6, HIGH);
+    digitalWrite(7, LOW);
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
+    
+    digitalWrite(A2, HIGH);  // paune
+    delay(500);
+    digitalWrite(A2, LOW);  // paune
+
+    digitalWrite(A0, HIGH);  // sawa
+    delay(500);
+    digitalWrite(A0, LOW);  // sawa
+    //DEDH //
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, HIGH);
+      digitalWrite(5, LOW);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, HIGH);
+
+      delay(500);
+
+
+    //2
+    digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, LOW);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, HIGH);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+
+    digitalWrite(A2, HIGH);  // paune
+    delay(500);
+    digitalWrite(A2, LOW);  // paune
+
+    digitalWrite(A0, HIGH);  // sawa
+    delay(500);
+    digitalWrite(A0, LOW);  // sawa
+
+    //DHAI//
+      digitalWrite(2, HIGH);
+      digitalWrite(3, HIGH);
+      digitalWrite(4, LOW);
+      digitalWrite(5, HIGH);
+
+      digitalWrite(6, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      digitalWrite(9, HIGH);
+
+      delay(500);
+
+
+    //3
+    digitalWrite(A2, HIGH);  // paune
+    delay(500);
+    digitalWrite(A2, LOW);  // paune
+        
+    digitalWrite(A0, HIGH);  // sawa
+    delay(500);    
+    digitalWrite(A0, LOW);  // sawa
+
+    digitalWrite(A1, HIGH);  // sadhe     
+    delay(500);    
+    digitalWrite(A1, LOW);  // sadhe       
+
+
+    //4
+    digitalWrite(A2, HIGH);  // paune
+    delay(500);
+    digitalWrite(A2, LOW);  // paune
+        
+    digitalWrite(A0, HIGH);  // sawa
+    delay(500);    
+    digitalWrite(A0, LOW);  // sawa
+
+    digitalWrite(A1, HIGH);  // sadhe     
+    delay(500);    
+    digitalWrite(A1, LOW);  // sadhe      
+
+
+    //5
+    digitalWrite(A2, HIGH);  // paune
+    delay(500);
+    digitalWrite(A2, LOW);  // paune
+        
+    digitalWrite(A0, HIGH);  // sawa
+    delay(500);    
+    digitalWrite(A0, LOW);  // sawa
+
+    digitalWrite(A1, HIGH);  // sadhe     
+    delay(500);    
+    digitalWrite(A1, LOW);  // sadhe       
+
+
+    //6
+    digitalWrite(A2, HIGH);  // paune
+    delay(500);
+    digitalWrite(A2, LOW);  // paune
+        
+    digitalWrite(A0, HIGH);  // sawa
+    delay(500);    
+    digitalWrite(A0, LOW);  // sawa
+
+    digitalWrite(A1, HIGH);  // sadhe     
+    delay(500);    
+    digitalWrite(A1, LOW);  // sadhe       
+
+
+    //7
+    digitalWrite(A2, HIGH);  // paune
+    delay(500);
+    digitalWrite(A2, LOW);  // paune
+        
+    digitalWrite(A0, HIGH);  // sawa
+    delay(500);    
+    digitalWrite(A0, LOW);  // sawa
+
+    digitalWrite(A1, HIGH);  // sadhe     
+    delay(500);    
+    digitalWrite(A1, LOW);  // sadhe       
+
+
+    //8
+    digitalWrite(A2, HIGH);  // paune
+    delay(500);
+    digitalWrite(A2, LOW);  // paune
+        
+    digitalWrite(A0, HIGH);  // sawa
+    delay(500);    
+    digitalWrite(A0, LOW);  // sawa
+
+    digitalWrite(A1, HIGH);  // sadhe     
+    delay(500);    
+    digitalWrite(A1, LOW);  // sadhe       
+
+
+    //9
+    digitalWrite(A2, HIGH);  // paune
+    delay(500);
+    digitalWrite(A2, LOW);  // paune
+        
+    digitalWrite(A0, HIGH);  // sawa
+    delay(500);    
+    digitalWrite(A0, LOW);  // sawa
+
+    digitalWrite(A1, HIGH);  // sadhe     
+    delay(500);    
+    digitalWrite(A1, LOW);  // sadhe       
+
+
+    //10    
+    digitalWrite(A2, HIGH);  // paune
+    delay(500);
+    digitalWrite(A2, LOW);  // paune
+        
+    digitalWrite(A0, HIGH);  // sawa
+    delay(500);    
+    digitalWrite(A0, LOW);  // sawa
+
+    digitalWrite(A1, HIGH);  // sadhe     
+    delay(500);    
+    digitalWrite(A1, LOW);  // sadhe       
+
+
+    //11
+    digitalWrite(A2, HIGH);  // paune
+    delay(500);
+    digitalWrite(A2, LOW);  // paune
+        
+    digitalWrite(A0, HIGH);  // sawa
+    delay(500);    
+    digitalWrite(A0, LOW);  // sawa
+
+    digitalWrite(A1, HIGH);  // sadhe     
+    delay(500);    
+    digitalWrite(A1, LOW);  // sadhe      
+
+
+             
+  }
+  
+}
